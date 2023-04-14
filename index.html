@@ -6,28 +6,34 @@
   <link href="style.css" rel="stylesheet" />
 </head>
 <body>
-  <input id="phone-number" type="text" placeholder="(111)-111-1111"></input>
+  <input id="phone-number" type="text" placeholder="(111) 111-1111"></input>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script>
     const formatNumber = (event => {
-        var val = event.target.value;
-        if (event.inputType == "deleteContentBackward" && [4, 8].includes(val.length)) {
+        let val = event.target.value;
+
+        // handle backspacing through ) and -
+        if (event.inputType == "deleteContentBackward" && [5, 9].includes(val.length)) {
             val = val.slice(0, -1);
+            event.target.value = val;
+        } else if (event.inputType == "insertText" || event.inputType == "insertFromPaste") {
+            // strip non-numeric characters from input
+            let num = val.replace(/[^0-9]/g,'');
+    
+            // format input into (xxx)xxx-xxxx format
+            let formatted = "";
+            if (num.length > 0) {
+                formatted = '(' + num.substring(0,3);
+            }
+            if (num.length > 2) {
+                formatted = formatted.concat(')' + num.substring(3,6));
+            }
+            if (num.length > 5) {
+                formatted = formatted.concat('-' + num.substring(6,10)); 
+            }
+    
+            event.target.value = formatted;
         }
-
-        var num = val.replace(/[^0-9]/g,'');
-        var formatted = "";
-        if (num.length > 0) {
-            formatted = '(' + num.substring(0,3);
-        }
-        if (num.length > 2) {
-            formatted = formatted.concat(')' + num.substring(3,6));
-        }
-        if (num.length > 5) {
-            formatted = formatted.concat('-' + num.substring(6,10)); 
-        }
-
-        event.target.value = formatted;
     });
     const phoneNumberInput = document.getElementById("phone-number");
     phoneNumberInput.addEventListener("input", formatNumber);
