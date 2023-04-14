@@ -10,8 +10,13 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script>
     const formatNumber = (event => {
-        var num = event.target.value.replace(/\D/g,''); 
-        var formatted = ""
+        var val = event.target.value;
+        if (event.inputType == "deleteContentBackward" && [4, 8].includes(val.length)) {
+            val = val.slice(0, -1);
+        }
+
+        var num = val.replace(/\D/g,'');
+        var formatted = "";
         if (num.length > 0) {
             formatted = '(' + num.substring(0,3);
         }
