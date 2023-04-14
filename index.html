@@ -13,11 +13,11 @@
         let val = event.target.value;
 
         // handle backspacing through "(", ") " and "-"
-        if (event.inputType == "deleteContentBackward" && [1, 6, 10].includes(val.length)) {
+        if (event.inputType === "deleteContentBackward" && [1, 6, 10].includes(val.length)) {
             // if backspacing through ") ", remove 2 additional characters, otherwise remove 1
             val = (val.length === 6 ? val.slice(0, -2) : val.slice(0, -1));
             event.target.value = val;
-        } else if (event.inputType == "insertText" || event.inputType == "insertFromPaste") {
+        } else if (event.inputType === "insertText" || event.inputType === "insertFromPaste") {
             // strip non-numeric characters from input
             let num = val.replace(/[^0-9]/g,'');
     
