@@ -11,7 +11,10 @@
   <script>
     const formatNumber = (event => {
         let val = event.target.value;
-
+        // capture initial cursor position
+        const position = event.target.selectionStart; 
+        const isLastPosition = position === val.length;
+  
         // handle backspacing through "(", ") " and "-"
         if (event.inputType === "deleteContentBackward" && [1, 6, 10].includes(val.length)) {
             // if backspacing through ") ", remove 2 additional characters, otherwise remove 1
@@ -34,6 +37,11 @@
         }
 
         event.target.value = formatted;
+
+        // set the cursor back to the initial position if not last position
+        if (!isLastPosition) {
+          event.target.selectionEnd = position;
+        }
     });
     const phoneNumberInput = document.getElementById("phone-number");
     phoneNumberInput.addEventListener("input", formatNumber);
