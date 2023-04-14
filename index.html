@@ -17,24 +17,23 @@
             // if backspacing through ") ", remove 2 additional characters, otherwise remove 1
             val = (val.length === 6 ? val.slice(0, -2) : val.slice(0, -1));
             event.target.value = val;
-        } else if (event.inputType === "insertText" || event.inputType === "insertFromPaste") {
-            // strip non-numeric characters from input
-            let num = val.replace(/[^0-9]/g,'');
-    
-            // format input into (xxx)xxx-xxxx format
-            let formatted = "";
-            if (num.length > 0) {
-                formatted = '(' + num.substring(0,3);
-            }
-            if (num.length > 2) {
-                formatted = formatted.concat(') ' + num.substring(3,6));
-            }
-            if (num.length > 5) {
-                formatted = formatted.concat('-' + num.substring(6,10)); 
-            }
-    
-            event.target.value = formatted;
         }
+        // strip non-numeric characters from input
+        let num = val.replace(/[^0-9]/g,'');
+
+        // format input into (xxx)xxx-xxxx format
+        let formatted = "";
+        if (num.length > 0) {
+            formatted = '(' + num.substring(0,3);
+        }
+        if (num.length > 3) {
+            formatted = formatted.concat(') ' + num.substring(3,6));
+        }
+        if (num.length > 6) {
+            formatted = formatted.concat('-' + num.substring(6,10)); 
+        }
+
+        event.target.value = formatted;
     });
     const phoneNumberInput = document.getElementById("phone-number");
     phoneNumberInput.addEventListener("input", formatNumber);
