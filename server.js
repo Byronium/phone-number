@@ -4,15 +4,13 @@ const path = require('path');
 
 // Create Express Server
 const app = express();
-
-// 
 app.use(express.json());
 // Set up serving static files
 app.use(express.static("express"));
 
 // default URL for website
 app.use('/', function(req,res){
-    res.sendFile(path.join(__dirname+'/express/index.html'));
+    res.sendFile(path.join(__dirname+'/index.html'));
 });
 
 const server = http.createServer(app);
