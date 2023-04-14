@@ -6,9 +6,26 @@
   <link href="style.css" rel="stylesheet" />
 </head>
 <body>
+  <input id="phone-number" type="text" placeholder="(111)-111-1111" maxLength=13></input>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script>
+    const formatNumber = (event => {
+        var num = event.target.value.replace(/\D/g,''); 
+        var formatted = ""
+        if (num.length > 0) {
+            formatted = '(' + num.substring(0,3);
+        }
+        if (num.length > 2) {
+            formatted = formatted.concat(')' + num.substring(3,6));
+        }
+        if (num.length > 5) {
+            formatted = formatted.concat('-' + num.substring(6,10)); 
+        }
+
+        event.target.value = formatted;
+    });
+    const phoneNumberInput = document.getElementById("phone-number");
+    phoneNumberInput.addEventListener("input", formatNumber);
   </script>
-  <input type="text" placeholder="(111)-111-1111" maxLength=10></input>
 </body>
 </html>
